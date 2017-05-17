@@ -28,6 +28,19 @@ export function todosReducer(state = initialState, action: Action): TodosState {
       });
     }
 
+    case TodosActions.actionTypes.ADD_TODO: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
+    case TodosActions.actionTypes.ADD_TODO_SUCCESS: {
+      return Object.assign({}, state, {
+        todoList: [...state.todoList, action.payload],
+        loading: false
+      });
+    }
+
     default: {
       return state;
     }

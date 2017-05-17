@@ -18,4 +18,13 @@ export class TodosApiService {
         return resp.json().response;
       });
   }
+
+  addTodo(todo: Todo): any {
+    const url = '/api/todos';
+
+    return this.http.post(url, todo)
+      .map((resp: Response) => {
+        return resp.json().response;
+      });
+  }
 }

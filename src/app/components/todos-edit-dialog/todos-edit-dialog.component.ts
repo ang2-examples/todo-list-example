@@ -1,5 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MdlDialogComponent} from 'angular2-mdl';
+import { Store } from '@ngrx/store';
+import { State } from '../../store/index.reducer';
+import {TodosActions} from '../../store/index.actions';
+import {Todo} from '../../models/todos/todo.model';
 
 @Component({
   selector: 'zkn-todos-edit-dialog',
@@ -11,7 +15,7 @@ export class TodosEditDialogComponent implements OnInit {
   taskname: string;
   @ViewChild('editTaskMdlDialog') editTaskMdlDialog: MdlDialogComponent;
 
-  constructor() { }
+  constructor(private store: Store<State>) { }
 
   ngOnInit() {
   }
@@ -21,7 +25,11 @@ export class TodosEditDialogComponent implements OnInit {
   }
 
   saveTask() {
-    alert('save');
+    const todo: Todo =  {
+      title: this.taskname
+    };
+    this.store.dispatch(new TodosActions.AddTodoAction(todo));
+    this.editTaskMdlDialog.close();
   }
 
   cancel() {

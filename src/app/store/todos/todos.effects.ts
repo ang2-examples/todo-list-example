@@ -28,4 +28,17 @@ export class TodosEffects {
           })
           .catch(() => of(new TodosActions.GetTodosFailAction('Get todos fail')));
     });
+
+  @Effect()
+  addTodo$: Observable<Action> = this.actions$
+    .ofType(TodosActions.actionTypes.ADD_TODO)
+    .debounceTime(100)
+    .map(toPayload)
+    .mergeMap((todo) => {
+      return this.todosApiService.addTodo(todo)
+        .map(() => {
+          return new TodosActions.AddTodoSuccessAction(todo);
+        })
+        .catch(() => of(new TodosActions.AddTodoFailAction('Get todos fail')));
+    });
 }

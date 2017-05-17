@@ -1,6 +1,14 @@
 import { Http, BaseRequestOptions, Response, ResponseOptions, RequestMethod } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
+const todosCache = {
+  todos: [
+    {title: 'task1 from backend'},
+    {title: 'task2 from backend'},
+  ]
+};
+
+
 export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOptions) {
   // configure fake backend
   backend.connections.subscribe((connection: MockConnection) => {
@@ -12,13 +20,19 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
       // fake users api end point
       if (connection.request.url.endsWith('/api/todos') && connection.request.method === RequestMethod.Get) {
 
-        const todos = [
-            {title: 'task1 from backend'},
-            {title: 'task2 from backend'},
-          ];
+        connection.mockRespond(new Response(
+          new ResponseOptions({ status: 200, body: { response: todosCache.todos} })
+        ));
+
+      }
+
+      if (connection.request.url.endsWith('/api/todos') && connection.request.method === RequestMethod.Post) {
+
+        const newTodo = JSON.parse(connection.request.getBody());
+        todosCache.todos = [...todosCache.todos, newTodo];
 
         connection.mockRespond(new Response(
-          new ResponseOptions({ status: 200, body: {response: todos} })
+          new ResponseOptions({ status: 200, body: { response: 'ok'} })
         ));
 
       }

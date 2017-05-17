@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import {type} from '../../shared/helpers/utils';
+import {Todo} from '../../models/todos/todo.model';
 
 const ACTION_PREFIX = `zkn/TODOS/`;
 export const actionTypes = {
@@ -8,6 +9,8 @@ export const actionTypes = {
   GET_TODO_LIST_FAIL: type(`${ACTION_PREFIX}GET_TODO_LIST_FAIL`),
 
   ADD_TODO: type(`${ACTION_PREFIX}ADD_TODO`),
+  ADD_TODO_SUCCESS: type(`${ACTION_PREFIX}ADD_TODO_SUCCESS`),
+  ADD_TODO_FAIL: type(`${ACTION_PREFIX}ADD_TODO_FAIL`),
 };
 
 export class GetTodosAction implements Action {
@@ -27,6 +30,16 @@ export class GetTodosFailAction implements Action {
 
 export class AddTodoAction implements Action {
   type = actionTypes.ADD_TODO;
+  constructor(public payload: Todo) { }
+}
+
+export class AddTodoSuccessAction implements Action {
+  type = actionTypes.ADD_TODO_SUCCESS;
+  constructor(public payload?: any) { }
+}
+
+export class AddTodoFailAction implements Action {
+  type = actionTypes.ADD_TODO_SUCCESS;
   constructor(public payload?: any) { }
 }
 
