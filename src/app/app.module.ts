@@ -23,6 +23,7 @@ import {TodosApiService} from './services/todos-api.service';
 
 // effects
 import {TodosEffects} from './store/todos/todos.effects';
+import { TodosSidenavComponent } from './components/todos-sidenav/todos-sidenav.component';
 
 
 
@@ -30,7 +31,8 @@ import {TodosEffects} from './store/todos/todos.effects';
 @NgModule({
   declarations: [
     AppComponent,
-    TodosComponent
+    TodosComponent,
+    TodosSidenavComponent
   ],
   imports: [
     BrowserModule,

@@ -6,7 +6,7 @@ import {TodosActions} from '../../store/index.actions';
 import {Todo} from '../../models/todos/todo.model';
 
 @Component({
-  selector: 'zkn-todos',
+  selector: 'zkn-todos-list',
   templateUrl: './todos.component.html',
   styleUrls: ['./todos.component.css']
 })
