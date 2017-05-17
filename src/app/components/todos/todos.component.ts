@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { State } from '../../store/index.reducer';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'zkn-todos',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodosComponent implements OnInit {
 
-  constructor() { }
+  todosList$: Observable<any>;
+
+  constructor(private store: Store<State>) { }
 
   ngOnInit() {
+    this.todosList$ = this.store.select(state => state.todos.todoList);
   }
 
 }

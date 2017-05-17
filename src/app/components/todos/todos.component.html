@@ -9,7 +9,12 @@
     </thead>
 
     <tbody>
-    <tr>
+
+    <tr *ngFor="let todo of todosList$ | async">
+      <td>{{todo.title}}</td>
+    </tr>
+
+    <!--<tr>
       <td>Дело1</td>
     </tr>
     <tr>
@@ -17,7 +22,7 @@
     </tr>
     <tr>
       <td>Дело3</td>
-    </tr>
+    </tr>-->
     </tbody>
 
   </table>
