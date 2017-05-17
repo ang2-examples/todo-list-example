@@ -4,13 +4,27 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOptions) {
   // configure fake backend
   backend.connections.subscribe((connection: MockConnection) => {
-    const testUser = { username: 'test', password: 'test', firstName: 'Test', lastName: 'User' };
+    // const testUser = { username: 'test', password: 'test', firstName: 'Test', lastName: 'User' };
 
     // wrap in timeout to simulate server api call
     setTimeout(() => {
 
+      // fake users api end point
+      if (connection.request.url.endsWith('/api/todos') && connection.request.method === RequestMethod.Get) {
+
+        const todos = [
+            {title: 'task1 from backend'},
+            {title: 'task2 from backend'},
+          ];
+
+        connection.mockRespond(new Response(
+          new ResponseOptions({ status: 200, body: {response: todos} })
+        ));
+
+      }
+
       // fake authenticate api end point
-      if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === RequestMethod.Post) {
+      /*if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === RequestMethod.Post) {
         // get parameters from post request
         const params = JSON.parse(connection.request.getBody());
 
@@ -40,7 +54,7 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
             new ResponseOptions({ status: 401 })
           ));
         }
-      }
+      }*/
 
     }, 500);
 

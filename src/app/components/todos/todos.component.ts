@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from '../../store/index.reducer';
 import {Observable} from 'rxjs/Observable';
+import {TodosActions} from '../../store/index.actions';
+import {Todo} from '../../models/todos/todo.model';
 
 @Component({
   selector: 'zkn-todos',
@@ -10,12 +12,14 @@ import {Observable} from 'rxjs/Observable';
 })
 export class TodosComponent implements OnInit {
 
-  todosList$: Observable<any>;
+  todosList$: Observable<Todo[]>;
 
   constructor(private store: Store<State>) { }
 
   ngOnInit() {
     this.todosList$ = this.store.select(state => state.todos.todoList);
+
+    this.store.dispatch(new TodosActions.GetTodosAction());
   }
 
 }

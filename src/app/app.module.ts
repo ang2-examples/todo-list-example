@@ -10,11 +10,20 @@ import {MaterialModule} from '@angular/material';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './store/index.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {EffectsModule} from '@ngrx/effects';
 
 import {fakeBackendProvider} from './shared/helpers/fake-backend';
 import { MockBackend } from '@angular/http/testing';
 import { BaseRequestOptions } from '@angular/http';
+
+// todo: via index
 import { TodosComponent } from './components/todos/todos.component';
+// todo: via index
+import {TodosApiService} from './services/todos-api.service';
+
+// effects
+import {TodosEffects} from './store/todos/todos.effects';
+
 
 
 
@@ -31,9 +40,13 @@ import { TodosComponent } from './components/todos/todos.component';
     MaterialModule,
 
     StoreModule.provideStore(reducer),
-    StoreDevtoolsModule.instrumentOnlyWithExtension()
+    StoreDevtoolsModule.instrumentOnlyWithExtension(),
+
+    EffectsModule.run(TodosEffects)
   ],
   providers: [
+    TodosApiService,
+
     // providers used to create fake backend
     fakeBackendProvider,
     MockBackend,
