@@ -7,9 +7,17 @@ import { AppComponent } from './app.component';
 
 import {MaterialModule} from '@angular/material';
 
+import {fakeBackendProvider} from './shared/helpers/fake-backend';
+import { MockBackend } from '@angular/http/testing';
+import { BaseRequestOptions } from '@angular/http';
+import { TodosComponent } from './components/todos/todos.component';
+
+
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TodosComponent
   ],
   imports: [
     BrowserModule,
@@ -18,7 +26,12 @@ import {MaterialModule} from '@angular/material';
 
     MaterialModule
   ],
-  providers: [],
+  providers: [
+    // providers used to create fake backend
+    fakeBackendProvider,
+    MockBackend,
+    BaseRequestOptions
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
