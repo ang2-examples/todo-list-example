@@ -9,6 +9,7 @@ import {MaterialModule} from '@angular/material';
 
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './store/index.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import {fakeBackendProvider} from './shared/helpers/fake-backend';
 import { MockBackend } from '@angular/http/testing';
@@ -29,7 +30,8 @@ import { TodosComponent } from './components/todos/todos.component';
 
     MaterialModule,
 
-    StoreModule.provideStore(reducer)
+    StoreModule.provideStore(reducer),
+    StoreDevtoolsModule.instrumentOnlyWithExtension()
   ],
   providers: [
     // providers used to create fake backend
