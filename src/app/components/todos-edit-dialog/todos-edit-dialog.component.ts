@@ -8,7 +8,8 @@ import {MdlDialogComponent} from 'angular2-mdl';
 })
 export class TodosEditDialogComponent implements OnInit {
 
-  @ViewChild('downloadIconMdlDialog') downloadIconMdlDialog: MdlDialogComponent;
+  taskname: string;
+  @ViewChild('editTaskMdlDialog') editTaskMdlDialog: MdlDialogComponent;
 
   constructor() { }
 
@@ -16,6 +17,14 @@ export class TodosEditDialogComponent implements OnInit {
   }
 
   show() {
-    this.downloadIconMdlDialog.show();
+    this.editTaskMdlDialog.show();
+  }
+
+  saveTask() {
+    alert('save');
+  }
+
+  cancel() {
+    this.editTaskMdlDialog.close();
   }
 }
