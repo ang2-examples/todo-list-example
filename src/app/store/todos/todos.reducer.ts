@@ -15,15 +15,16 @@ const initialState: TodosState = {
 export function todosReducer(state = initialState, action: Action): TodosState {
   switch (action.type) {
 
-    case TodosActions.actionTypes.GET_TODO_LIST_SUCCESS: {
+    case TodosActions.actionTypes.GET_TODO_LIST: {
       return Object.assign({}, state, {
-        todoList: [...action.payload]
+        loading: true
       });
     }
 
     case TodosActions.actionTypes.GET_TODO_LIST_SUCCESS: {
       return Object.assign({}, state, {
-        todoList: [...action.payload]
+        todoList: [...action.payload],
+        loading: false
       });
     }
 

@@ -13,10 +13,12 @@ import {Todo} from '../../models/todos/todo.model';
 export class TodosComponent implements OnInit {
 
   todosList$: Observable<Todo[]>;
+  loading$: Observable<boolean>;
 
   constructor(private store: Store<State>) { }
 
   ngOnInit() {
+    this.loading$ = this.store.select(state => state.todos.loading);
     this.todosList$ = this.store.select(state => state.todos.todoList);
 
     this.store.dispatch(new TodosActions.GetTodosAction());
