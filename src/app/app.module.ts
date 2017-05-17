@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
-import {MaterialModule} from '@angular/material';
+import {MaterialModule, MdDialogModule} from '@angular/material';
 
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './store/index.reducer';
@@ -23,7 +23,11 @@ import {TodosApiService} from './services/todos-api.service';
 
 // effects
 import {TodosEffects} from './store/todos/todos.effects';
+
 import { TodosSidenavComponent } from './components/todos-sidenav/todos-sidenav.component';
+import { TodosEditDialogComponent } from './components/todos-edit-dialog/todos-edit-dialog.component';
+
+import {MdlModule} from 'angular2-mdl';
 
 
 
@@ -32,14 +36,17 @@ import { TodosSidenavComponent } from './components/todos-sidenav/todos-sidenav.
   declarations: [
     AppComponent,
     TodosComponent,
-    TodosSidenavComponent
+    TodosSidenavComponent,
+    TodosEditDialogComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
 
-    MaterialModule,
+    MdlModule,
+
+    MaterialModule.forRoot(),
 
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
@@ -54,6 +61,7 @@ import { TodosSidenavComponent } from './components/todos-sidenav/todos-sidenav.
     MockBackend,
     BaseRequestOptions
   ],
+  entryComponents: [ TodosEditDialogComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
