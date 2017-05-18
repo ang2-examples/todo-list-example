@@ -10,18 +10,18 @@
 
     <tbody>
 
-    <tr *ngFor="let todo of todosList$ | async">
-      <td class="actions">
-        <md-icon (click)="onDeleteTodo(todo)">close</md-icon>
-        <md-icon (click)="onEditTodo(todo)">edit</md-icon>
-      </td>
-      <td>{{todo.title}}</td>
-      <td>
-        <mdl-select>
-          <mdl-option *ngFor="let p of people" [value]="p.id">{{p.name}}</mdl-option>
-        </mdl-select>
-      </td>
-    </tr>
+      <tr *ngFor="let todo of todosList$ | async">
+        <td class="actions">
+          <md-icon (click)="onDeleteTodo(todo)">close</md-icon>
+          <md-icon (click)="onEditTodo(todo)">edit</md-icon>
+        </td>
+        <td>{{todo.title}}</td>
+        <td>
+          <mdl-select [(ngModel)]="todo.status" placeholder="" style="width: 100px;">
+            <mdl-option *ngFor="let status of statuses" [value]="status.code">{{status.title}}</mdl-option>
+          </mdl-select>
+        </td>
+      </tr>
 
     </tbody>
 

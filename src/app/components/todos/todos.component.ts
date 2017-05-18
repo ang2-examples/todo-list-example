@@ -18,10 +18,11 @@ export class TodosComponent implements OnInit {
   todosList$: Observable<Todo[]>;
   loading$: Observable<boolean>;
 
-  people = [
-    {name: 'steak-0'},
-    {name: 'pizza-1'},
-    {name: 'tacos-2'}
+  todoStatus: any;
+  statuses = [
+    {code: 'todo', title: 'В очереди'},
+    {code: 'cancel', title: 'Отменено'},
+    {code: 'done', title: 'Выполнено'}
   ];
 
   constructor(private store: Store<State>) { }

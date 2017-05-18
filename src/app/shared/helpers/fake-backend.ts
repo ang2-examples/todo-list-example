@@ -16,11 +16,13 @@ const todosCache = {
   todos: [
     {
       id: guid(),
-      title: 'Накормить собаку'
+      title: 'Накормить собаку',
+      status: 'todo'
     },
     {
       id: guid(),
-      title: 'Сходить в магазин'
+      title: 'Сходить в магазин',
+      status: 'done'
     },
   ]
 };

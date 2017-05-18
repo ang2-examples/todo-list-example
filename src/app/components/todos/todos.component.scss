@@ -9,7 +9,18 @@ table {
     tr {
       th {
         text-align: left;
+        padding-right: 50px;
+      }
+      td {
+        padding-right: 50px;
       }
     }
+  }
+}
+
+.mdl-select /deep/ {
+  .mdl-textfield {
+    width: 170px;
+    padding: 5px 0;
   }
 }
