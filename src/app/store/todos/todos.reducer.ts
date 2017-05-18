@@ -41,6 +41,20 @@ export function todosReducer(state = initialState, action: Action): TodosState {
       });
     }
 
+    case TodosActions.actionTypes.DELETE_TODO: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
+    case TodosActions.actionTypes.DELETE_TODO_SUCCESS: {
+      const deletedId: string = action.payload;
+      return Object.assign({}, state, {
+        todoList: state.todoList.filter((todo) => todo.id !== deletedId),
+        loading: false
+      });
+    }
+
     default: {
       return state;
     }

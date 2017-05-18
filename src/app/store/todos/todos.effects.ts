@@ -41,4 +41,17 @@ export class TodosEffects {
         })
         .catch(() => of(new TodosActions.AddTodoFailAction('Get todos fail')));
     });
+
+  @Effect()
+  deleteTodo$: Observable<Action> = this.actions$
+    .ofType(TodosActions.actionTypes.DELETE_TODO)
+    .debounceTime(100)
+    .map(toPayload)
+    .mergeMap((todo) => {
+      return this.todosApiService.deleteTodo(todo)
+        .map((resp) => {
+          return new TodosActions.DeleteTodoSuccessAction(resp.id);
+        })
+        .catch(() => of(new TodosActions.DeleteTodoFailAction('Get todos fail')));
+    });
 }

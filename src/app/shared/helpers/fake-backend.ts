@@ -55,6 +55,19 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
 
       }
 
+      if (connection.request.url.startsWith('/api/todos?id=') && connection.request.method === RequestMethod.Delete) {
+
+        const params = connection.request.url.split('?')[1];
+        const id = params.split('=')[1];
+
+        todosCache.todos = todosCache.todos.filter((todo) => todo.id !== id);
+
+        connection.mockRespond(new Response(
+          new ResponseOptions({ status: 200, body: { response: {result: 'ok', id: id}} })
+        ));
+
+      }
+
       // fake authenticate api end point
       /*if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === RequestMethod.Post) {
         // get parameters from post request

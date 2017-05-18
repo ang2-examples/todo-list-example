@@ -27,4 +27,13 @@ export class TodosApiService {
         return resp.json().response;
       });
   }
+
+  deleteTodo(todo: Todo): any {
+    const url = '/api/todos?id=' + todo.id;
+
+    return this.http.delete(url)
+      .map((resp: Response) => {
+        return resp.json().response;
+      });
+  }
 }

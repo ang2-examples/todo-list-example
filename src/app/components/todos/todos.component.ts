@@ -25,6 +25,6 @@ export class TodosComponent implements OnInit {
   }
 
   onDeleteTodo(todo) {
-
+    this.store.dispatch(new TodosActions.DeleteTodoAction(todo));
   }
 }
