@@ -24,8 +24,12 @@ export function todosReducer(state = initialState, action: Action): TodosState {
     }
 
     case TodosActions.actionTypes.GET_TODO_LIST_SUCCESS: {
+
+      let todos = [...<Todo[]>action.payload];
+      todos = todos.sort((a, b) => a.priority - b.priority);
+
       return Object.assign({}, state, {
-        todoList: [...action.payload],
+        todoList: todos,
         loading: false
       });
     }
@@ -40,7 +44,7 @@ export function todosReducer(state = initialState, action: Action): TodosState {
       const savedTodo: Todo = action.payload;
 
       let isNew = true;
-      const newTodoList: Todo[] = [];
+      let newTodoList: Todo[] = [];
       state.todoList.forEach((todo) => {
         if (todo.id === savedTodo.id) {
           isNew = false;
@@ -52,6 +56,7 @@ export function todosReducer(state = initialState, action: Action): TodosState {
 
       if (isNew) {
         newTodoList.push(savedTodo);
+        newTodoList = newTodoList.sort((a, b) => a.priority - b.priority);
       }
 
       return Object.assign({}, state, {

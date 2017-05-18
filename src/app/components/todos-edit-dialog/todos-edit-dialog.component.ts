@@ -12,7 +12,7 @@ import {Todo} from '../../models/todos/todo.model';
 })
 export class TodosEditDialogComponent implements OnInit {
 
-  todo: Todo = { title: '' };
+  todo: Todo = this.getNewTodo();
   title: string;
   @ViewChild('editTaskMdlDialog') editTaskMdlDialog: MdlDialogComponent;
 
@@ -22,7 +22,7 @@ export class TodosEditDialogComponent implements OnInit {
   }
 
   show(todo: Todo) {
-    this.todo = todo || { title: '' };
+    this.todo = todo || this.getNewTodo();
     this.title = this.todo.title;
     this.editTaskMdlDialog.show();
   }
@@ -35,5 +35,12 @@ export class TodosEditDialogComponent implements OnInit {
 
   cancel() {
     this.editTaskMdlDialog.close();
+  }
+
+  private getNewTodo(): Todo {
+    return {
+      title: '',
+      priority: 0
+    };
   }
 }

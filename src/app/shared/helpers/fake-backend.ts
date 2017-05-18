@@ -29,22 +29,26 @@ const todosCache = {
     {
       id: guid(),
       title: 'Накормить собаку',
-      status: 'todo'
+      status: 'todo',
+      priority: 1
     },
     {
       id: guid(),
       title: 'Сходить в магазин',
-      status: 'done'
+      status: 'done',
+      priority: 4,
     },
     {
       id: guid(),
       title: 'Починить холодильник',
-      status: 'cancel'
+      status: 'cancel',
+      priority: 3,
     },
     {
       id: guid(),
       title: 'Зарядить смартфон',
-      status: 'todo'
+      status: 'todo',
+      priority: 2,
     },
   ]
 };
@@ -113,6 +117,16 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
         ));
 
       }
+
+      if (connection.request.url.startsWith('/api/move-todo') && connection.request.method === RequestMethod.Post) {
+
+        const todoMove = JSON.parse(connection.request.getBody());
+
+        connection.mockRespond(new Response(
+          new ResponseOptions({ status: 200, body: { response: todoMove.todo} })
+        ));
+      }
+
 
     }, 500);
 
