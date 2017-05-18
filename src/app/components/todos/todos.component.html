@@ -4,8 +4,14 @@
     <tr>
       <th></th>
       <th>Имя задания</th>
-      <th>Статус</th>
-      <th class="priority" (click)="onSortPriorityChange()">
+      <th class="sortable-column" (click)="onSortStatusChange()">
+        Статус
+        <span *ngIf="sorting.column === 'status'">
+          <md-icon *ngIf="sorting.direction">keyboard_arrow_down</md-icon>
+          <md-icon *ngIf="!sorting.direction">keyboard_arrow_up</md-icon>
+        </span>
+      </th>
+      <th class="priority sortable-column" (click)="onSortPriorityChange()">
         Приоритет
         <span *ngIf="sorting.column === 'priority'">
           <md-icon *ngIf="sorting.direction">keyboard_arrow_down</md-icon>

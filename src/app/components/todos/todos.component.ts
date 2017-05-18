@@ -63,4 +63,9 @@ export class TodosComponent implements OnInit {
     this.store.dispatch(new TodosActions.ChangeSortingAction('priority'));
     this.store.dispatch(new TodosActions.GetTodosAction());
   }
+
+  onSortStatusChange() {
+    this.store.dispatch(new TodosActions.ChangeSortingAction('status'));
+    this.store.dispatch(new TodosActions.GetTodosAction());
+  }
 }

@@ -66,6 +66,16 @@ function swapTodos(priority, targetPriority) {
   return todo;
 }
 
+function compareStrings(a, b, attr) {
+  if ( a[attr] < b[attr] ) {
+    return -1;
+  }
+  if ( a[attr] > b[attr] ) {
+    return 1;
+  }
+  return 0;
+}
+
 export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOptions) {
   // configure fake backend
   backend.connections.subscribe((connection: MockConnection) => {
@@ -89,6 +99,11 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
           const sortData = params.sort.split(',');
           if (sortData[0] === 'priority') {
             const sortFunc = sortData[1] === 'true' ? (a, b) => a.priority - b.priority : (b, a) => a.priority - b.priority;
+            retTodos = retTodos.sort(sortFunc);
+          }
+
+          if (sortData[0] === 'status') {
+            const sortFunc = sortData[1] === 'true' ? (a, b) => compareStrings(a, b, 'status') : (b, a) => compareStrings(a, b, 'status');
             retTodos = retTodos.sort(sortFunc);
           }
         }

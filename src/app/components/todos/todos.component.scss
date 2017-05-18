@@ -5,9 +5,12 @@
   }
 }
 
+.sortable-column {
+  cursor: pointer;
+}
+
 .priority {
   padding-left: 100px;
-  cursor: pointer;
 }
 
 table {
