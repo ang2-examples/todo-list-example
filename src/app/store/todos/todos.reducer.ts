@@ -37,7 +37,6 @@ export function todosReducer(state = initialState, action: Action): TodosState {
     case TodosActions.actionTypes.GET_TODO_LIST_SUCCESS: {
 
       let todos = [...<Todo[]>action.payload];
-      todos = sortList(todos);
 
       return Object.assign({}, state, {
         todoList: todos,
@@ -67,7 +66,6 @@ export function todosReducer(state = initialState, action: Action): TodosState {
 
       if (isNew) {
         newTodoList.push(savedTodo);
-        newTodoList = sortList(newTodoList);
       }
 
       return Object.assign({}, state, {
@@ -121,7 +119,6 @@ export function todosReducer(state = initialState, action: Action): TodosState {
       let todos = deepCloneArray(state.todoList);
       const priority = todoMove.todo.priority;
       swapTodos(todos, priority, todoMove.direction ? priority + 1 : priority - 1);
-      todos = sortList(todos);
 
       return Object.assign({}, state, {
         todoList: todos,
@@ -161,15 +158,25 @@ function deepCloneArray(todos: Todo[]): Todo[] {
   return tempTodos;
 }
 
-function sortList(todos: Todo[]): Todo[] {
-  return todos; //.sort((a, b) => a.priority - b.priority);
-}
-
 function swapTodos(todoList: Todo[], priority: number, targetPriority: number) {
-  const todo = todoList.filter((item) => item.priority === priority)[0];
-  const targetTodo = todoList.filter((item) => item.priority === targetPriority)[0];
-  if (todo && targetTodo) {
-    todo.priority = targetPriority;
-    targetTodo.priority = priority;
+  let sourceIndex = -1;
+  let targetIndex = -1;
+  todoList.forEach((todo, index) => {
+    if (todo.priority === priority) {
+      sourceIndex = index;
+    }
+    if (todo.priority === targetPriority) {
+      targetIndex = index;
+    }
+  });
+
+  // change priorities and phy
+  if (sourceIndex !== -1 && targetIndex !== -1) {
+    todoList[sourceIndex].priority = targetPriority;
+    todoList[targetIndex].priority = priority;
+
+    const tmp = todoList[sourceIndex];
+    todoList[sourceIndex] = todoList[targetIndex];
+    todoList[targetIndex] = tmp;
   }
 }
