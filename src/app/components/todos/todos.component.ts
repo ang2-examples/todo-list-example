@@ -24,4 +24,7 @@ export class TodosComponent implements OnInit {
     this.store.dispatch(new TodosActions.GetTodosAction());
   }
 
+  onDeleteTodo(todo) {
+
+  }
 }

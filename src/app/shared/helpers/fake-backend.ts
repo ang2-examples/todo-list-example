@@ -1,10 +1,27 @@
 import { Http, BaseRequestOptions, Response, ResponseOptions, RequestMethod } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  // return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+  //   s4() + '-' + s4() + s4() + s4();
+  return s4() + s4() + s4();
+}
+
 const todosCache = {
   todos: [
-    {title: 'task1 from backend'},
-    {title: 'task2 from backend'},
+    {
+      id: guid(),
+      title: 'Накормить собаку'
+    },
+    {
+      id: guid(),
+      title: 'Сходить в магазин'
+    },
   ]
 };
 
@@ -29,10 +46,11 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
       if (connection.request.url.endsWith('/api/todos') && connection.request.method === RequestMethod.Post) {
 
         const newTodo = JSON.parse(connection.request.getBody());
+        newTodo.id = guid();
         todosCache.todos = [...todosCache.todos, newTodo];
 
         connection.mockRespond(new Response(
-          new ResponseOptions({ status: 200, body: { response: 'ok'} })
+          new ResponseOptions({ status: 200, body: { response: newTodo} })
         ));
 
       }
