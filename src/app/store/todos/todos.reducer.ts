@@ -3,16 +3,26 @@ import {TodosActions} from '../index.actions';
 import {Todo} from '../../models/todos/todo.model';
 import {TodoMove} from '../../models/todos/todo-move.model';
 
+export interface SortingState {
+  column: string;
+  direction: boolean;
+}
+
 export interface TodosState {
   loading: boolean;
   todoList: Todo[];
   filters: string[];
+  sorting: SortingState;
 }
 
 const initialState: TodosState = {
   loading: false,
   todoList: [],
-  filters: []
+  filters: [],
+  sorting: {
+    column: 'priority',
+    direction: true
+  }
 };
 
 export function todosReducer(state = initialState, action: Action): TodosState {
@@ -119,6 +129,26 @@ export function todosReducer(state = initialState, action: Action): TodosState {
       });
     }
 
+    case TodosActions.actionTypes.CHANGE_SORTING: {
+      const column: string = action.payload;
+
+      const sorting: SortingState = {
+        column: state.sorting.column,
+        direction: state.sorting.direction
+      };
+
+      if (sorting.column === column) {
+        sorting.direction = !sorting.direction;
+      } else {
+        sorting.column = column;
+        sorting.direction = true;
+      }
+
+      return Object.assign({}, state, {
+        sorting: sorting
+      });
+    }
+
     default: {
       return state;
     }
@@ -132,7 +162,7 @@ function deepCloneArray(todos: Todo[]): Todo[] {
 }
 
 function sortList(todos: Todo[]): Todo[] {
-  return todos.sort((a, b) => a.priority - b.priority);
+  return todos; //.sort((a, b) => a.priority - b.priority);
 }
 
 function swapTodos(todoList: Todo[], priority: number, targetPriority: number) {

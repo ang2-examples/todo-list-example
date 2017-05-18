@@ -85,6 +85,14 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
           retTodos = retTodos.filter((todo) => statArray.some((status) => status === todo.status));
         }
 
+        if (params.sort) {
+          const sortData = params.sort.split(',');
+          if (sortData[0] === 'priority') {
+            const sortFunc = sortData[1] === 'true' ? (a, b) => a.priority - b.priority : (b, a) => a.priority - b.priority;
+            retTodos = retTodos.sort(sortFunc);
+          }
+        }
+
         connection.mockRespond(new Response(
           new ResponseOptions({ status: 200, body: { response: retTodos} })
         ));

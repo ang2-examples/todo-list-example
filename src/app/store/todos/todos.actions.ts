@@ -22,6 +22,8 @@ export const actionTypes = {
   MOVE_TODO: type(`${ACTION_PREFIX}MOVE_TODO`),
   MOVE_TODO_SUCCESS: type(`${ACTION_PREFIX}MOVE_TODO_SUCCESS`),
   MOVE_TODO_FAIL: type(`${ACTION_PREFIX}MOVE_TODO_FAIL`),
+
+  CHANGE_SORTING: type(`${ACTION_PREFIX}CHANGE_SORTING`),
 };
 
 export class GetTodosAction implements Action {
@@ -89,3 +91,7 @@ export class MoveTodoFailAction implements Action {
   constructor(public payload?: any) { }
 }
 
+export class ChangeSortingAction implements Action {
+  type = actionTypes.CHANGE_SORTING;
+  constructor(public payload: string) { }
+}

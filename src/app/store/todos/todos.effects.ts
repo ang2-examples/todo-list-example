@@ -27,7 +27,8 @@ export class TodosEffects {
     .withLatestFrom(this.store)
     .map(([actionParams, state]) => {
       return {
-        filters: state.todos.filters
+        filters: state.todos.filters,
+        sorting: state.todos.sorting
       };
     })
     .mergeMap((params) => {

@@ -5,7 +5,14 @@
       <th></th>
       <th>Имя задания</th>
       <th>Статус</th>
-      <th class="priority">Приоритет</th>
+      <th class="priority" (click)="onSortPriorityChange()">
+        Приоритет
+        <span *ngIf="sorting.column === 'priority'">
+          <md-icon *ngIf="sorting.direction">keyboard_arrow_down</md-icon>
+          <md-icon *ngIf="!sorting.direction">keyboard_arrow_up</md-icon>
+        </span>
+      </th>
+      <th></th>
     </tr>
     </thead>
 
@@ -25,6 +32,9 @@
         <td class="actions priority">
           <md-icon (click)="onMoveDown(todo)">arrow_downward</md-icon>
           <md-icon (click)="onMoveUp(todo)">arrow_upward</md-icon>
+        </td>
+        <td>
+          {{todo.priority}}
         </td>
       </tr>
 

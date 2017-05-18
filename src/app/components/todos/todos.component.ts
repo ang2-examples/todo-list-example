@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {TodosActions} from '../../store/index.actions';
 import {Todo} from '../../models/todos/todo.model';
 import {TodosEditDialogComponent} from '../todos-edit-dialog/todos-edit-dialog.component';
+import {SortingState} from '../../store/todos/todos.reducer';
 
 @Component({
   selector: 'zkn-todos-list',
@@ -17,6 +18,7 @@ export class TodosComponent implements OnInit {
 
   todosList$: Observable<Todo[]>;
   loading$: Observable<boolean>;
+  sorting: SortingState;
 
   statuses = [
     {code: 'todo', title: 'В очереди'},
@@ -27,6 +29,9 @@ export class TodosComponent implements OnInit {
   constructor(private store: Store<State>) { }
 
   ngOnInit() {
+    this.store.select(state => state.todos.sorting).subscribe((sorting) => {
+      this.sorting = sorting;
+    });
     this.loading$ = this.store.select(state => state.todos.loading);
     this.todosList$ = this.store.select(state => state.todos.todoList);
 
@@ -52,5 +57,10 @@ export class TodosComponent implements OnInit {
 
   onMoveUp(todo) {
     this.store.dispatch(new TodosActions.MoveTodoAction({todo: todo, direction: false}));
+  }
+
+  onSortPriorityChange() {
+    this.store.dispatch(new TodosActions.ChangeSortingAction('priority'));
+    this.store.dispatch(new TodosActions.GetTodosAction());
   }
 }

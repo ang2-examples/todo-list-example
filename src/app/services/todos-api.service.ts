@@ -13,8 +13,10 @@ export class TodosApiService {
 
   getTodos(params): Observable<Todo[]> {
     const filters = params.filters.join(',');
+    const sorting = `${params.sorting.column},${params.sorting.direction}`;
     const urlParams = [
-      filters.length > 0 ? `statuses=${filters}` : ''
+      filters.length > 0 ? `statuses=${filters}` : '',
+      sorting.length > 0 ? `sort=${sorting}` : ''
     ];
 
     const url = '/api/todos?' + urlParams.filter(Boolean).join('&');
