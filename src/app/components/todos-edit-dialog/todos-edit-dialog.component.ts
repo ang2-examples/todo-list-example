@@ -8,11 +8,11 @@ import {Todo} from '../../models/todos/todo.model';
 @Component({
   selector: 'zkn-todos-edit-dialog',
   templateUrl: './todos-edit-dialog.component.html',
-  styleUrls: ['./todos-edit-dialog.component.css']
+  styleUrls: ['./todos-edit-dialog.component.scss']
 })
 export class TodosEditDialogComponent implements OnInit {
 
-  taskname: string;
+  todo: Todo = { title: '' };
   @ViewChild('editTaskMdlDialog') editTaskMdlDialog: MdlDialogComponent;
 
   constructor(private store: Store<State>) { }
@@ -20,15 +20,14 @@ export class TodosEditDialogComponent implements OnInit {
   ngOnInit() {
   }
 
-  show() {
+  show(todo: Todo) {
+    this.todo = todo || { title: '' };
+
     this.editTaskMdlDialog.show();
   }
 
   saveTask() {
-    const todo: Todo =  {
-      title: this.taskname
-    };
-    this.store.dispatch(new TodosActions.AddTodoAction(todo));
+    this.store.dispatch(new TodosActions.AddTodoAction(this.todo));
     this.editTaskMdlDialog.close();
   }
 

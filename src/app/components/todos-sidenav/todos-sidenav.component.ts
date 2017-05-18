@@ -8,7 +8,7 @@ import {TodosEditDialogComponent} from '../todos-edit-dialog/todos-edit-dialog.c
 })
 export class TodosSidenavComponent implements OnInit {
 
-  @ViewChild('editTodoDialog') editTodoDialog: TodosEditDialogComponent;
+  @ViewChild('addTodoDialog') addTodoDialog: TodosEditDialogComponent;
 
   constructor() {
 
@@ -18,6 +18,6 @@ export class TodosSidenavComponent implements OnInit {
   }
 
   OnCreateTask(): void {
-    this.editTodoDialog.show();
+    this.addTodoDialog.show(null);
   }
 }

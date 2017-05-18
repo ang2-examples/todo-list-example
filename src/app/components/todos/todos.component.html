@@ -11,7 +11,10 @@
     <tbody>
 
     <tr *ngFor="let todo of todosList$ | async">
-      <td><md-icon class="delete-btn" (click)="onDeleteTodo(todo)">close</md-icon></td>
+      <td class="actions">
+        <md-icon (click)="onDeleteTodo(todo)">close</md-icon>
+        <md-icon (click)="onEditTodo(todo)">edit</md-icon>
+      </td>
       <td>{{todo.id}}</td>
       <td>{{todo.title}}</td>
     </tr>
@@ -24,3 +27,5 @@
   </md-progress-bar>
 
 </md-card>
+
+<zkn-todos-edit-dialog #editTodoDialog></zkn-todos-edit-dialog>
