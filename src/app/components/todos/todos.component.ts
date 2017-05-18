@@ -47,10 +47,10 @@ export class TodosComponent implements OnInit {
   }
 
   onMoveDown(todo) {
-    this.store.dispatch(new TodosActions.MoveTodoAction({todo: todo, direction: false}));
+    this.store.dispatch(new TodosActions.MoveTodoAction({todo: todo, direction: true}));
   }
 
   onMoveUp(todo) {
-    this.store.dispatch(new TodosActions.MoveTodoAction({todo: todo, direction: true}));
+    this.store.dispatch(new TodosActions.MoveTodoAction({todo: todo, direction: false}));
   }
 }

@@ -30,29 +30,41 @@ const todosCache = {
       id: guid(),
       title: 'Накормить собаку',
       status: 'todo',
-      priority: 1
+      priority: 0
     },
     {
       id: guid(),
       title: 'Сходить в магазин',
       status: 'done',
-      priority: 4,
+      priority: 3,
     },
     {
       id: guid(),
       title: 'Починить холодильник',
       status: 'cancel',
-      priority: 3,
+      priority: 2,
     },
     {
       id: guid(),
       title: 'Зарядить смартфон',
       status: 'todo',
-      priority: 2,
+      priority: 1,
     },
   ]
 };
 
+function swapTodos(priority, targetPriority) {
+  const tempTodos = [];
+  todosCache.todos.forEach(todo => tempTodos.push(Object.assign({}, todo)));
+  const todo = tempTodos.filter((item) => item.priority === priority)[0];
+  const targetTodo = tempTodos.filter((item) => item.priority === targetPriority)[0];
+  if (todo && targetTodo) {
+    todo.priority = targetPriority;
+    targetTodo.priority = priority;
+    todosCache.todos = tempTodos;
+  }
+  return todo;
+}
 
 export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOptions) {
   // configure fake backend
@@ -85,6 +97,7 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
         if (!newTodo.id) {
           newTodo.id = guid();
           newTodo.status = 'todo';
+          newTodo.priority = todosCache.todos.length;
           todosCache.todos = [...todosCache.todos, newTodo];
         } else {
           const newTodos = [];
@@ -122,8 +135,11 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
 
         const todoMove = JSON.parse(connection.request.getBody());
 
+        const priority = todoMove.todo.priority;
+        const todo = swapTodos(priority, todoMove.direction ? priority + 1 : priority - 1);
+
         connection.mockRespond(new Response(
-          new ResponseOptions({ status: 200, body: { response: todoMove.todo} })
+          new ResponseOptions({ status: 200, body: { response: todo} })
         ));
       }
 

@@ -65,14 +65,14 @@ export class TodosEffects {
     });
 
   @Effect()
-  moveDownTodo$: Observable<Action> = this.actions$
+  moveTodo$: Observable<Action> = this.actions$
     .ofType(TodosActions.actionTypes.MOVE_TODO)
     .debounceTime(100)
     .map(toPayload)
     .mergeMap((todoMove) => {
       return this.todosApiService.moveTodo(todoMove)
-        .map((todo) => {
-          return new TodosActions.MoveTodoSuccessAction(todo);
+        .map(() => {
+          return new TodosActions.MoveTodoSuccessAction(todoMove);
         })
         .catch(() => of(new TodosActions.DeleteTodoFailAction('Get todos fail')));
     });

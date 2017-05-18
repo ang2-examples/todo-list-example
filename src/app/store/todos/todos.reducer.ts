@@ -1,6 +1,7 @@
 import {Action} from '@ngrx/store';
 import {TodosActions} from '../index.actions';
 import {Todo} from '../../models/todos/todo.model';
+import {TodoMove} from '../../models/todos/todo-move.model';
 
 export interface TodosState {
   loading: boolean;
@@ -26,7 +27,7 @@ export function todosReducer(state = initialState, action: Action): TodosState {
     case TodosActions.actionTypes.GET_TODO_LIST_SUCCESS: {
 
       let todos = [...<Todo[]>action.payload];
-      todos = todos.sort((a, b) => a.priority - b.priority);
+      todos = sortList(todos);
 
       return Object.assign({}, state, {
         todoList: todos,
@@ -56,7 +57,7 @@ export function todosReducer(state = initialState, action: Action): TodosState {
 
       if (isNew) {
         newTodoList.push(savedTodo);
-        newTodoList = newTodoList.sort((a, b) => a.priority - b.priority);
+        newTodoList = sortList(newTodoList);
       }
 
       return Object.assign({}, state, {
@@ -98,8 +99,47 @@ export function todosReducer(state = initialState, action: Action): TodosState {
       });
     }
 
+    case TodosActions.actionTypes.MOVE_TODO: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
+    case TodosActions.actionTypes.MOVE_TODO_SUCCESS: {
+      const todoMove: TodoMove = action.payload;
+
+      let todos = deepCloneArray(state.todoList);
+      const priority = todoMove.todo.priority;
+      swapTodos(todos, priority, todoMove.direction ? priority + 1 : priority - 1);
+      todos = sortList(todos);
+
+      return Object.assign({}, state, {
+        todoList: todos,
+        loading: false
+      });
+    }
+
     default: {
       return state;
     }
+  }
+}
+
+function deepCloneArray(todos: Todo[]): Todo[] {
+  const tempTodos = [];
+  todos.forEach(todo => tempTodos.push(Object.assign({}, todo)));
+  return tempTodos;
+}
+
+function sortList(todos: Todo[]): Todo[] {
+  return todos.sort((a, b) => a.priority - b.priority);
+}
+
+function swapTodos(todoList: Todo[], priority: number, targetPriority: number) {
+  const todo = todoList.filter((item) => item.priority === priority)[0];
+  const targetTodo = todoList.filter((item) => item.priority === targetPriority)[0];
+  if (todo && targetTodo) {
+    todo.priority = targetPriority;
+    targetTodo.priority = priority;
   }
 }
