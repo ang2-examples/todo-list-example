@@ -2,18 +2,21 @@ import {Injectable} from '@angular/core';
 import {Actions, Effect, toPayload} from '@ngrx/effects';
 import {TodosApiService} from '../../services/todos-api.service';
 import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
+import {Action, Store} from '@ngrx/store';
+import { State } from '../index.reducer';
 import {TodosActions} from '../index.actions';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/mergeMap';
 import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/withLatestFrom';
 
 @Injectable()
 export class TodosEffects {
 
   constructor(private actions$: Actions,
-              private todosApiService: TodosApiService) {
+              private todosApiService: TodosApiService,
+              private store: Store<State>) {
   }
 
   @Effect()
@@ -21,8 +24,14 @@ export class TodosEffects {
     .ofType(TodosActions.actionTypes.GET_TODO_LIST)
     .debounceTime(100)
     .map(toPayload)
-    .mergeMap(() => {
-        return this.todosApiService.getTodos()
+    .withLatestFrom(this.store)
+    .map(([actionParams, state]) => {
+      return {
+        filters: state.todos.filters
+      };
+    })
+    .mergeMap((params) => {
+        return this.todosApiService.getTodos(params)
           .map(todos => {
             return new TodosActions.GetTodosSuccessAction(todos);
           })

@@ -15,6 +15,8 @@ export const actionTypes = {
   DELETE_TODO: type(`${ACTION_PREFIX}DELETE_TODO`),
   DELETE_TODO_SUCCESS: type(`${ACTION_PREFIX}DELETE_TODO_SUCCESS`),
   DELETE_TODO_FAIL: type(`${ACTION_PREFIX}DELETE_TODO_FAIL`),
+
+  SET_FILTERS: type(`${ACTION_PREFIX}SET_FILTERS`)
 };
 
 export class GetTodosAction implements Action {
@@ -62,3 +64,7 @@ export class DeleteTodoFailAction implements Action {
   constructor(public payload?: any) { }
 }
 
+export class SetFiltersAction implements Action {
+  type = actionTypes.SET_FILTERS;
+  constructor(public payload: any) { }
+}

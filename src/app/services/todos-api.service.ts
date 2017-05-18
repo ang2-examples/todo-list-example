@@ -10,8 +10,13 @@ export class TodosApiService {
   constructor(private http: Http) {
   }
 
-  getTodos(): Observable<Todo[]> {
-    const url = '/api/todos';
+  getTodos(params): Observable<Todo[]> {
+    const filters = params.filters.join(',');
+    const urlParams = [
+      filters.length > 0 ? `statuses=${filters}` : ''
+    ];
+
+    const url = '/api/todos?' + urlParams.filter(Boolean).join('&');
 
     return this.http.get(url)
       .map((resp: Response) => {

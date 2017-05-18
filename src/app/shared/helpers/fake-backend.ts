@@ -12,6 +12,18 @@ function guid() {
   return s4() + s4() + s4();
 }
 
+function getJsonFromUrl(url) {
+  const query = url.split('?')[1];
+  const result = {};
+  if (query) {
+    query.split('&').forEach(function(part) {
+      const item = part.split('=');
+      result[item[0]] = decodeURIComponent(item[1]);
+    });
+  }
+  return result;
+}
+
 const todosCache = {
   todos: [
     {
@@ -24,6 +36,16 @@ const todosCache = {
       title: 'Сходить в магазин',
       status: 'done'
     },
+    {
+      id: guid(),
+      title: 'Починить холодильник',
+      status: 'cancel'
+    },
+    {
+      id: guid(),
+      title: 'Зарядить смартфон',
+      status: 'todo'
+    },
   ]
 };
 
@@ -31,16 +53,24 @@ const todosCache = {
 export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOptions) {
   // configure fake backend
   backend.connections.subscribe((connection: MockConnection) => {
-    // const testUser = { username: 'test', password: 'test', firstName: 'Test', lastName: 'User' };
 
     // wrap in timeout to simulate server api call
     setTimeout(() => {
 
       // fake users api end point
-      if (connection.request.url.endsWith('/api/todos') && connection.request.method === RequestMethod.Get) {
+      if (connection.request.url.startsWith('/api/todos') && connection.request.method === RequestMethod.Get) {
+
+        const params: any = getJsonFromUrl(connection.request.url);
+
+        let retTodos = [...todosCache.todos];
+
+        if (params.statuses) {
+          const statArray = params.statuses.split(',');
+          retTodos = retTodos.filter((todo) => statArray.some((status) => status === todo.status));
+        }
 
         connection.mockRespond(new Response(
-          new ResponseOptions({ status: 200, body: { response: todosCache.todos} })
+          new ResponseOptions({ status: 200, body: { response: retTodos} })
         ));
 
       }
@@ -83,39 +113,6 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
         ));
 
       }
-
-      // fake authenticate api end point
-      /*if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === RequestMethod.Post) {
-        // get parameters from post request
-        const params = JSON.parse(connection.request.getBody());
-
-        // check user credentials and return fake jwt token if valid
-        if (params.username === testUser.username && params.password === testUser.password) {
-          connection.mockRespond(new Response(
-            new ResponseOptions({ status: 200, body: { token: 'fake-jwt-token' } })
-          ));
-        } else {
-          connection.mockRespond(new Response(
-            new ResponseOptions({ status: 200 })
-          ));
-        }
-      }
-
-      // fake users api end point
-      if (connection.request.url.endsWith('/api/users') && connection.request.method === RequestMethod.Get) {
-        // check for fake auth token in header and return test users if valid, this security is implemented server side
-        // in a real application
-        if (connection.request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
-          connection.mockRespond(new Response(
-            new ResponseOptions({ status: 200, body: [testUser] })
-          ));
-        } else {
-          // return 401 not authorised if token is null or invalid
-          connection.mockRespond(new Response(
-            new ResponseOptions({ status: 401 })
-          ));
-        }
-      }*/
 
     }, 500);
 

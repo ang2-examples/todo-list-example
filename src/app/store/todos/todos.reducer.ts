@@ -5,11 +5,13 @@ import {Todo} from '../../models/todos/todo.model';
 export interface TodosState {
   loading: boolean;
   todoList: Todo[];
+  filters: string[];
 }
 
 const initialState: TodosState = {
   loading: false,
-  todoList: []
+  todoList: [],
+  filters: []
 };
 
 export function todosReducer(state = initialState, action: Action): TodosState {
@@ -69,6 +71,25 @@ export function todosReducer(state = initialState, action: Action): TodosState {
       return Object.assign({}, state, {
         todoList: state.todoList.filter((todo) => todo.id !== deletedId),
         loading: false
+      });
+    }
+
+    case TodosActions.actionTypes.SET_FILTERS: {
+      const formFilters = action.payload;
+
+      const filters = [];
+      if (formFilters.filterByCancel) {
+        filters.push('cancel');
+      }
+      if (formFilters.filterByDone) {
+        filters.push('done');
+      }
+      if (formFilters.filterByTodo) {
+        filters.push('todo');
+      }
+
+      return Object.assign({}, state, {
+        filters: filters
       });
     }
 

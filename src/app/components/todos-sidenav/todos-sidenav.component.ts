@@ -1,6 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {TodosEditDialogComponent} from '../todos-edit-dialog/todos-edit-dialog.component';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {TodosActions} from '../../store/index.actions';
+import { Store } from '@ngrx/store';
+import { State } from '../../store/index.reducer';
 
 @Component({
   selector: 'zkn-todos-sidenav',
@@ -12,7 +15,7 @@ export class TodosSidenavComponent implements OnInit {
   todoSearchForm: FormGroup = null;
   @ViewChild('addTodoDialog') addTodoDialog: TodosEditDialogComponent;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private store: Store<State>) {
   }
 
   ngOnInit() {
@@ -27,7 +30,8 @@ export class TodosSidenavComponent implements OnInit {
     this.todoSearchForm.valueChanges
       .debounceTime(500)
       .subscribe((form: any) => {
-        alert(form);
+        this.store.dispatch(new TodosActions.SetFiltersAction(form));
+        this.store.dispatch(new TodosActions.GetTodosAction());
       });
   }
 
