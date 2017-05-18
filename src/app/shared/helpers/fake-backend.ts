@@ -50,6 +50,7 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
         const newTodo = JSON.parse(connection.request.getBody());
         if (!newTodo.id) {
           newTodo.id = guid();
+          newTodo.status = 'todo';
           todosCache.todos = [...todosCache.todos, newTodo];
         } else {
           const newTodos = [];

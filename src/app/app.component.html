@@ -1,6 +1,12 @@
 
 <md-sidenav-layout fullscreen>
 
+  <md-sidenav #sidenav mode="side" opened="true" class="app-sidenav">
+
+    <zkn-todos-sidenav></zkn-todos-sidenav>
+
+  </md-sidenav>
+
   <md-toolbar color="primary">
     <button class="app-icon-button" (click)="sidenav.toggle()">
       <i class="material-icons app-toolbar-menu">menu</i>
@@ -9,12 +15,6 @@
     Todos Example App
 
   </md-toolbar>
-
-  <md-sidenav #sidenav mode="side" opened="true" class="app-sidenav">
-
-    <zkn-todos-sidenav></zkn-todos-sidenav>
-
-  </md-sidenav>
 
   <div class="app-content">
 
