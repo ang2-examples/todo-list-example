@@ -13,6 +13,7 @@ import {Todo} from '../../models/todos/todo.model';
 export class TodosEditDialogComponent implements OnInit {
 
   todo: Todo = { title: '' };
+  title: string;
   @ViewChild('editTaskMdlDialog') editTaskMdlDialog: MdlDialogComponent;
 
   constructor(private store: Store<State>) { }
@@ -22,12 +23,13 @@ export class TodosEditDialogComponent implements OnInit {
 
   show(todo: Todo) {
     this.todo = todo || { title: '' };
-
+    this.title = this.todo.title;
     this.editTaskMdlDialog.show();
   }
 
   saveTask() {
-    this.store.dispatch(new TodosActions.SaveTodoAction(this.todo));
+    const savedTodo = Object.assign({}, this.todo, { title: this.title });
+    this.store.dispatch(new TodosActions.SaveTodoAction(savedTodo));
     this.editTaskMdlDialog.close();
   }
 

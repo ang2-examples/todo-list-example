@@ -50,11 +50,15 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
           newTodo.id = guid();
           todosCache.todos = [...todosCache.todos, newTodo];
         } else {
+          const newTodos = [];
           todosCache.todos.forEach((todo) => {
             if (todo.id === newTodo.id) {
-              Object.assign(todo, newTodo);
+              newTodos.push(newTodo);
+            } else {
+              newTodos.push(todo);
             }
           });
+          todosCache.todos = [...newTodos];
         }
 
 

@@ -35,8 +35,25 @@ export function todosReducer(state = initialState, action: Action): TodosState {
     }
 
     case TodosActions.actionTypes.SAVE_TODO_SUCCESS: {
+      const savedTodo: Todo = action.payload;
+
+      let isNew = true;
+      const newTodoList: Todo[] = [];
+      state.todoList.forEach((todo) => {
+        if (todo.id === savedTodo.id) {
+          isNew = false;
+          newTodoList.push(savedTodo);
+        } else {
+          newTodoList.push(todo);
+        }
+      });
+
+      if (isNew) {
+        newTodoList.push(savedTodo);
+      }
+
       return Object.assign({}, state, {
-        todoList: [...state.todoList, action.payload],
+        todoList: newTodoList,
         loading: false
       });
     }
