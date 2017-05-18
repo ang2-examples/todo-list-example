@@ -30,16 +30,16 @@ export class TodosEffects {
     });
 
   @Effect()
-  addTodo$: Observable<Action> = this.actions$
-    .ofType(TodosActions.actionTypes.ADD_TODO)
+  saveTodo$: Observable<Action> = this.actions$
+    .ofType(TodosActions.actionTypes.SAVE_TODO)
     .debounceTime(100)
     .map(toPayload)
     .mergeMap((todo) => {
-      return this.todosApiService.addTodo(todo)
-        .map((newTodo) => {
-          return new TodosActions.AddTodoSuccessAction(newTodo);
+      return this.todosApiService.saveTodo(todo)
+        .map((savedTodo) => {
+          return new TodosActions.SaveTodoSuccessAction(savedTodo);
         })
-        .catch(() => of(new TodosActions.AddTodoFailAction('Get todos fail')));
+        .catch(() => of(new TodosActions.SaveTodoFailAction('Get todos fail')));
     });
 
   @Effect()

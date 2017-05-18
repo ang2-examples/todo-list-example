@@ -46,8 +46,17 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
       if (connection.request.url.endsWith('/api/todos') && connection.request.method === RequestMethod.Post) {
 
         const newTodo = JSON.parse(connection.request.getBody());
-        newTodo.id = guid();
-        todosCache.todos = [...todosCache.todos, newTodo];
+        if (!newTodo.id) {
+          newTodo.id = guid();
+          todosCache.todos = [...todosCache.todos, newTodo];
+        } else {
+          todosCache.todos.forEach((todo) => {
+            if (todo.id === newTodo.id) {
+              Object.assign(todo, newTodo);
+            }
+          });
+        }
+
 
         connection.mockRespond(new Response(
           new ResponseOptions({ status: 200, body: { response: newTodo} })

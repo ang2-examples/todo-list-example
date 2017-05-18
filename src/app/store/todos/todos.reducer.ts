@@ -28,13 +28,13 @@ export function todosReducer(state = initialState, action: Action): TodosState {
       });
     }
 
-    case TodosActions.actionTypes.ADD_TODO: {
+    case TodosActions.actionTypes.SAVE_TODO: {
       return Object.assign({}, state, {
         loading: true
       });
     }
 
-    case TodosActions.actionTypes.ADD_TODO_SUCCESS: {
+    case TodosActions.actionTypes.SAVE_TODO_SUCCESS: {
       return Object.assign({}, state, {
         todoList: [...state.todoList, action.payload],
         loading: false

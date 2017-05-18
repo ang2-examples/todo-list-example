@@ -8,9 +8,9 @@ export const actionTypes = {
   GET_TODO_LIST_SUCCESS: type(`${ACTION_PREFIX}GET_TODO_LIST_SUCCESS`),
   GET_TODO_LIST_FAIL: type(`${ACTION_PREFIX}GET_TODO_LIST_FAIL`),
 
-  ADD_TODO: type(`${ACTION_PREFIX}ADD_TODO`),
-  ADD_TODO_SUCCESS: type(`${ACTION_PREFIX}ADD_TODO_SUCCESS`),
-  ADD_TODO_FAIL: type(`${ACTION_PREFIX}ADD_TODO_FAIL`),
+  SAVE_TODO: type(`${ACTION_PREFIX}SAVE_TODO`),
+  SAVE_TODO_SUCCESS: type(`${ACTION_PREFIX}SAVE_TODO_SUCCESS`),
+  SAVE_TODO_FAIL: type(`${ACTION_PREFIX}SAVE_TODO_FAIL`),
 
   DELETE_TODO: type(`${ACTION_PREFIX}DELETE_TODO`),
   DELETE_TODO_SUCCESS: type(`${ACTION_PREFIX}DELETE_TODO_SUCCESS`),
@@ -32,18 +32,18 @@ export class GetTodosFailAction implements Action {
   constructor(public payload?: any) { }
 }
 
-export class AddTodoAction implements Action {
-  type = actionTypes.ADD_TODO;
+export class SaveTodoAction implements Action {
+  type = actionTypes.SAVE_TODO;
   constructor(public payload: Todo) { }
 }
 
-export class AddTodoSuccessAction implements Action {
-  type = actionTypes.ADD_TODO_SUCCESS;
+export class SaveTodoSuccessAction implements Action {
+  type = actionTypes.SAVE_TODO_SUCCESS;
   constructor(public payload?: any) { }
 }
 
-export class AddTodoFailAction implements Action {
-  type = actionTypes.ADD_TODO_FAIL;
+export class SaveTodoFailAction implements Action {
+  type = actionTypes.SAVE_TODO_FAIL;
   constructor(public payload?: any) { }
 }
 

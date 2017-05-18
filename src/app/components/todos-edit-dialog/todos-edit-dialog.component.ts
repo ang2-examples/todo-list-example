@@ -27,7 +27,7 @@ export class TodosEditDialogComponent implements OnInit {
   }
 
   saveTask() {
-    this.store.dispatch(new TodosActions.AddTodoAction(this.todo));
+    this.store.dispatch(new TodosActions.SaveTodoAction(this.todo));
     this.editTaskMdlDialog.close();
   }
 

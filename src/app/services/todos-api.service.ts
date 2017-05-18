@@ -19,7 +19,7 @@ export class TodosApiService {
       });
   }
 
-  addTodo(todo: Todo): any {
+  saveTodo(todo: Todo): any {
     const url = '/api/todos';
 
     return this.http.post(url, todo)
