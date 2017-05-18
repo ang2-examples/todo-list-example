@@ -18,7 +18,6 @@ export class TodosComponent implements OnInit {
   todosList$: Observable<Todo[]>;
   loading$: Observable<boolean>;
 
-  todoStatus: any;
   statuses = [
     {code: 'todo', title: 'В очереди'},
     {code: 'cancel', title: 'Отменено'},
@@ -40,5 +39,10 @@ export class TodosComponent implements OnInit {
 
   onEditTodo(todo) {
     this.editTodoDialog.show(todo);
+  }
+
+  changeStatus(value, todo) {
+    const savedTodo = Object.assign({}, todo, { status: value });
+    this.store.dispatch(new TodosActions.SaveTodoAction(savedTodo));
   }
 }

@@ -13,6 +13,10 @@ table {
       }
       td {
         padding-right: 50px;
+
+        &.status {
+          width: 100px;
+        }
       }
     }
   }

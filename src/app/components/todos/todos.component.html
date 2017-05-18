@@ -16,8 +16,8 @@
           <md-icon (click)="onEditTodo(todo)">edit</md-icon>
         </td>
         <td>{{todo.title}}</td>
-        <td>
-          <mdl-select [(ngModel)]="todo.status" placeholder="" style="width: 100px;">
+        <td class="status">
+          <mdl-select [(ngModel)]="todo.status" (change)="changeStatus($event, todo)">
             <mdl-option *ngFor="let status of statuses" [value]="status.code">{{status.title}}</mdl-option>
           </mdl-select>
         </td>
