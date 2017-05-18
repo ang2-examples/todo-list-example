@@ -1,7 +1,12 @@
 .actions {
+  white-space: nowrap;
   md-icon {
     cursor: pointer;
   }
+}
+
+.priority {
+  padding-left: 100px;
 }
 
 table {
@@ -10,12 +15,16 @@ table {
       th {
         text-align: left;
         padding-right: 50px;
+        &.priority {
+          text-align: right;
+        }
       }
       td {
-        padding-right: 50px;
+        padding-right: 100px;
 
         &.status {
           width: 100px;
+          padding-left: 50px;
         }
       }
     }

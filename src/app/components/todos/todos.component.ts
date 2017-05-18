@@ -45,4 +45,12 @@ export class TodosComponent implements OnInit {
     const savedTodo = Object.assign({}, todo, { status: value });
     this.store.dispatch(new TodosActions.SaveTodoAction(savedTodo));
   }
+
+  onMoveDown(todo) {
+    this.store.dispatch(new TodosActions.MoveTodoAction({todo: todo, direction: false}));
+  }
+
+  onMoveUp(todo) {
+    this.store.dispatch(new TodosActions.MoveTodoAction({todo: todo, direction: true}));
+  }
 }

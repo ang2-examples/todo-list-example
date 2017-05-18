@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import {type} from '../../shared/helpers/utils';
 import {Todo} from '../../models/todos/todo.model';
+import {TodoMove} from '../../models/todos/todo-move.model';
 
 const ACTION_PREFIX = `zkn/TODOS/`;
 export const actionTypes = {
@@ -16,7 +17,11 @@ export const actionTypes = {
   DELETE_TODO_SUCCESS: type(`${ACTION_PREFIX}DELETE_TODO_SUCCESS`),
   DELETE_TODO_FAIL: type(`${ACTION_PREFIX}DELETE_TODO_FAIL`),
 
-  SET_FILTERS: type(`${ACTION_PREFIX}SET_FILTERS`)
+  SET_FILTERS: type(`${ACTION_PREFIX}SET_FILTERS`),
+
+  MOVE_TODO: type(`${ACTION_PREFIX}MOVE_TODO`),
+  MOVE_TODO_SUCCESS: type(`${ACTION_PREFIX}MOVE_TODO_SUCCESS`),
+  MOVE_TODO_FAIL: type(`${ACTION_PREFIX}MOVE_TODO_FAIL`),
 };
 
 export class GetTodosAction implements Action {
@@ -68,3 +73,19 @@ export class SetFiltersAction implements Action {
   type = actionTypes.SET_FILTERS;
   constructor(public payload: any) { }
 }
+
+export class MoveTodoAction implements Action {
+  type = actionTypes.MOVE_TODO;
+  constructor(public payload: TodoMove) { }
+}
+
+export class MoveTodoSuccessAction implements Action {
+  type = actionTypes.MOVE_TODO_SUCCESS;
+  constructor(public payload: Todo) { }
+}
+
+export class MoveTodoFailAction implements Action {
+  type = actionTypes.MOVE_TODO_FAIL;
+  constructor(public payload?: any) { }
+}
+

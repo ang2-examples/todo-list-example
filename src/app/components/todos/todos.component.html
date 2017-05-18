@@ -5,6 +5,7 @@
       <th></th>
       <th>Имя задания</th>
       <th>Статус</th>
+      <th class="priority">Приоритет</th>
     </tr>
     </thead>
 
@@ -20,6 +21,10 @@
           <mdl-select [(ngModel)]="todo.status" (change)="changeStatus($event, todo)">
             <mdl-option *ngFor="let status of statuses" [value]="status.code">{{status.title}}</mdl-option>
           </mdl-select>
+        </td>
+        <td class="actions priority">
+          <md-icon (click)="onMoveDown(todo)">arrow_downward</md-icon>
+          <md-icon (click)="onMoveUp(todo)">arrow_upward</md-icon>
         </td>
       </tr>
 

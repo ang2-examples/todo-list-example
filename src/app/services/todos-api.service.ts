@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Todo} from '../models/todos/todo.model';
+import {TodoMove} from '../models/todos/todo-move.model';
 
 
 @Injectable()
@@ -37,6 +38,15 @@ export class TodosApiService {
     const url = '/api/todos?id=' + todo.id;
 
     return this.http.delete(url)
+      .map((resp: Response) => {
+        return resp.json().response;
+      });
+  }
+
+  moveTodo(todoMove: TodoMove): any {
+    const url = '/api/move-todo';
+
+    return this.http.post(url, todoMove)
       .map((resp: Response) => {
         return resp.json().response;
       });
