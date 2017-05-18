@@ -2,9 +2,9 @@
   <table>
     <thead>
     <tr>
-      <th>
-        Имя задания
-      </th>
+      <th></th>
+      <th>Имя задания</th>
+      <th>Статус</th>
     </tr>
     </thead>
 
@@ -15,8 +15,12 @@
         <md-icon (click)="onDeleteTodo(todo)">close</md-icon>
         <md-icon (click)="onEditTodo(todo)">edit</md-icon>
       </td>
-      <td>{{todo.id}}</td>
       <td>{{todo.title}}</td>
+      <td>
+        <mdl-select>
+          <mdl-option *ngFor="let p of people" [value]="p.id">{{p.name}}</mdl-option>
+        </mdl-select>
+      </td>
     </tr>
 
     </tbody>

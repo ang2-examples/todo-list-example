@@ -18,6 +18,12 @@ export class TodosComponent implements OnInit {
   todosList$: Observable<Todo[]>;
   loading$: Observable<boolean>;
 
+  people = [
+    {name: 'steak-0'},
+    {name: 'pizza-1'},
+    {name: 'tacos-2'}
+  ];
+
   constructor(private store: Store<State>) { }
 
   ngOnInit() {

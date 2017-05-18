@@ -28,8 +28,8 @@ import { TodosSidenavComponent } from './components/todos-sidenav/todos-sidenav.
 import { TodosEditDialogComponent } from './components/todos-edit-dialog/todos-edit-dialog.component';
 
 import {MdlModule} from 'angular2-mdl';
-
-
+import {MdlSelectModule} from '@angular2-mdl-ext/select';
+import {MdlPopoverModule} from '@angular2-mdl-ext/popover';
 
 
 @NgModule({
@@ -45,6 +45,8 @@ import {MdlModule} from 'angular2-mdl';
     HttpModule,
 
     MdlModule,
+    MdlSelectModule.forRoot(),
+    MdlPopoverModule.forRoot(),
 
     MaterialModule.forRoot(),
 

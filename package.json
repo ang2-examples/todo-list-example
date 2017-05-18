@@ -21,6 +21,8 @@
     "@angular/platform-browser": "^2.0.0",
     "@angular/platform-browser-dynamic": "^2.0.0",
     "@angular/router": "^3.0.0",
+    "@angular2-mdl-ext/popover": "^0.6.0",
+    "@angular2-mdl-ext/select": "^0.10.3",
     "@ngrx/core": "^1.2.0",
     "@ngrx/effects": "^2.0.3",
     "@ngrx/store": "^2.2.2",
