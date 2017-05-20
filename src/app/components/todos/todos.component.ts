@@ -4,8 +4,9 @@ import { State } from '../../store/index.reducer';
 import {Observable} from 'rxjs/Observable';
 import {TodosActions} from '../../store/index.actions';
 import {Todo} from '../../models/todos/todo.model';
-import {TodosEditDialogComponent} from '../todos-edit-dialog/todos-edit-dialog.component';
 import {SortingState} from '../../store/todos/todos.reducer';
+import {MdDialog} from '@angular/material';
+import {TodoEditDialogComponent} from '../todo-edit-dialog/todo-edit-dialog.component';
 
 @Component({
   selector: 'zkn-todos-list',
@@ -13,8 +14,6 @@ import {SortingState} from '../../store/todos/todos.reducer';
   styleUrls: ['./todos.component.scss']
 })
 export class TodosComponent implements OnInit {
-
-  @ViewChild('editTodoDialog') editTodoDialog: TodosEditDialogComponent;
 
   todosList$: Observable<Todo[]>;
   loading$: Observable<boolean>;
@@ -26,7 +25,7 @@ export class TodosComponent implements OnInit {
     {code: 'done', title: 'Выполнено'}
   ];
 
-  constructor(private store: Store<State>) { }
+  constructor(private store: Store<State>, private dialog: MdDialog) { }
 
   ngOnInit() {
     this.store.select(state => state.todos.sorting).subscribe((sorting) => {
@@ -43,7 +42,7 @@ export class TodosComponent implements OnInit {
   }
 
   onEditTodo(todo) {
-    this.editTodoDialog.show(todo);
+    this.dialog.open(TodoEditDialogComponent, { data: todo });
   }
 
   changeStatus(value, todo) {

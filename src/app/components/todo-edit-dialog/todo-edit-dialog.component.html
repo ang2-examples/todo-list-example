@@ -1,0 +1,13 @@
+<h1 md-dialog-title *ngIf="!todo.id">Добавить таск</h1>
+<h1 md-dialog-title *ngIf="!!todo.id">Изменить таск</h1>
+
+<div md-dialog-content>
+  <md-input-container>
+    <input mdInput placeholder="Имя задания" [(ngModel)]="todo.title">
+  </md-input-container>
+</div>
+
+<div md-dialog-actions>
+  <button md-button (click)="onSave()">Сохранить</button>
+  <button md-button md-dialog-close>Отменить</button>
+</div>

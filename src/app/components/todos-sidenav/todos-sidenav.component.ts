@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {TodosEditDialogComponent} from '../todos-edit-dialog/todos-edit-dialog.component';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TodosActions} from '../../store/index.actions';
 import { Store } from '@ngrx/store';
 import { State } from '../../store/index.reducer';
+import {MdDialog} from '@angular/material';
+import {TodoEditDialogComponent} from '../todo-edit-dialog/todo-edit-dialog.component';
 
 @Component({
   selector: 'zkn-todos-sidenav',
@@ -12,10 +13,10 @@ import { State } from '../../store/index.reducer';
 })
 export class TodosSidenavComponent implements OnInit {
 
-  todoSearchForm: FormGroup = null;
-  @ViewChild('addTodoDialog') addTodoDialog: TodosEditDialogComponent;
-
-  constructor(private formBuilder: FormBuilder, private store: Store<State>) {
+  todoSearchForm: FormGroup;
+  constructor(private formBuilder: FormBuilder,
+              private store: Store<State>,
+              private dialog: MdDialog) {
   }
 
   ngOnInit() {
@@ -36,6 +37,6 @@ export class TodosSidenavComponent implements OnInit {
   }
 
   OnCreateTask(): void {
-    this.addTodoDialog.show(null);
+    this.dialog.open(TodoEditDialogComponent);
   }
 }

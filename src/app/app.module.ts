@@ -13,7 +13,8 @@ import {
   MdToolbarModule,
   MdSidenavModule,
   MdIconModule,
-  MdProgressBarModule
+  MdProgressBarModule,
+  MdInputModule
 } from '@angular/material';
 
 import { StoreModule } from '@ngrx/store';
@@ -34,11 +35,11 @@ import {TodosApiService} from './services/todos-api.service';
 import {TodosEffects} from './store/todos/todos.effects';
 
 import { TodosSidenavComponent } from './components/todos-sidenav/todos-sidenav.component';
-import { TodosEditDialogComponent } from './components/todos-edit-dialog/todos-edit-dialog.component';
 
 import {MdlModule} from 'angular2-mdl';
 import {MdlSelectModule} from '@angular2-mdl-ext/select';
 import {MdlPopoverModule} from '@angular2-mdl-ext/popover';
+import { TodoEditDialogComponent } from './components/todo-edit-dialog/todo-edit-dialog.component';
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import {MdlPopoverModule} from '@angular2-mdl-ext/popover';
     AppComponent,
     TodosComponent,
     TodosSidenavComponent,
-    TodosEditDialogComponent
+    TodoEditDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +68,7 @@ import {MdlPopoverModule} from '@angular2-mdl-ext/popover';
     MdSidenavModule,
     MdIconModule,
     MdProgressBarModule,
+    MdInputModule,
 
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
@@ -81,7 +83,7 @@ import {MdlPopoverModule} from '@angular2-mdl-ext/popover';
     MockBackend,
     BaseRequestOptions
   ],
-  entryComponents: [ TodosEditDialogComponent ],
+  entryComponents: [ TodoEditDialogComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
