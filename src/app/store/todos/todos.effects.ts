@@ -72,8 +72,8 @@ export class TodosEffects {
     .map(toPayload)
     .mergeMap((todoMove) => {
       return this.todosApiService.moveTodo(todoMove)
-        .map(() => {
-          return new TodosActions.MoveTodoSuccessAction(todoMove);
+        .map((movedTodos) => {
+          return new TodosActions.MoveTodoSuccessAction(movedTodos);
         })
         .catch(() => of(new TodosActions.DeleteTodoFailAction('Get todos fail')));
     });

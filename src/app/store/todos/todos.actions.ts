@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import {type} from '../../shared/helpers/utils';
 import {Todo} from '../../models/todos/todo.model';
-import {TodoMove} from '../../models/todos/todo-move.model';
+import {MovedTodos, TodoMove} from '../../models/todos/todo-move.model';
 
 const ACTION_PREFIX = `zkn/TODOS/`;
 export const actionTypes = {
@@ -83,7 +83,7 @@ export class MoveTodoAction implements Action {
 
 export class MoveTodoSuccessAction implements Action {
   type = actionTypes.MOVE_TODO_SUCCESS;
-  constructor(public payload: Todo) { }
+  constructor(public payload: MovedTodos) { }
 }
 
 export class MoveTodoFailAction implements Action {

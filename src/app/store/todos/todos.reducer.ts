@@ -1,7 +1,7 @@
 import {Action} from '@ngrx/store';
 import {TodosActions} from '../index.actions';
 import {Todo} from '../../models/todos/todo.model';
-import {TodoMove} from '../../models/todos/todo-move.model';
+import {MovedTodos, TodoMove} from '../../models/todos/todo-move.model';
 
 export interface SortingState {
   column: string;
@@ -114,11 +114,10 @@ export function todosReducer(state = initialState, action: Action): TodosState {
     }
 
     case TodosActions.actionTypes.MOVE_TODO_SUCCESS: {
-      const todoMove: TodoMove = action.payload;
+      const movedTodos: MovedTodos = action.payload;
 
-      let todos = deepCloneArray(state.todoList);
-      const priority = todoMove.todo.priority;
-      swapTodos(todos, priority, todoMove.direction ? priority + 1 : priority - 1);
+      const todos = deepCloneArray(state.todoList);
+      swapTodos(todos, movedTodos);
 
       return Object.assign({}, state, {
         todoList: todos,
@@ -158,25 +157,25 @@ function deepCloneArray(todos: Todo[]): Todo[] {
   return tempTodos;
 }
 
-function swapTodos(todoList: Todo[], priority: number, targetPriority: number) {
-  let sourceIndex = -1;
-  let targetIndex = -1;
-  todoList.forEach((todo, index) => {
-    if (todo.priority === priority) {
-      sourceIndex = index;
+function swapTodos(todoList: Todo[], movedTodos: MovedTodos) {
+  if (movedTodos.todo && movedTodos.targetTodo) {
+    let sourceIndex = -1;
+    let targetIndex = -1;
+    todoList.forEach((todo, index) => {
+      if (todo.id === movedTodos.todo.id) {
+        sourceIndex = index;
+      }
+      if (todo.id === movedTodos.targetTodo.id) {
+        targetIndex = index;
+      }
+    });
+    if (sourceIndex !== -1 && targetIndex !== -1) {
+      const tmp = todoList[sourceIndex];
+      todoList[sourceIndex] = todoList[targetIndex];
+      todoList[targetIndex] = tmp;
     }
-    if (todo.priority === targetPriority) {
-      targetIndex = index;
+    if (sourceIndex !== -1 && targetIndex === -1) {
+      todoList[sourceIndex] = movedTodos.todo;
     }
-  });
-
-  // change priorities and phy
-  if (sourceIndex !== -1 && targetIndex !== -1) {
-    todoList[sourceIndex].priority = targetPriority;
-    todoList[targetIndex].priority = priority;
-
-    const tmp = todoList[sourceIndex];
-    todoList[sourceIndex] = todoList[targetIndex];
-    todoList[targetIndex] = tmp;
   }
 }

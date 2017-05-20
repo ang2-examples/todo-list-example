@@ -87,8 +87,9 @@ function swapTodos(priority, targetPriority) {
     todo.priority = targetPriority;
     targetTodo.priority = priority;
     todosCache.todos = tempTodos;
+    return {todo: todo, targetTodo: targetTodo};
   }
-  return todo;
+  return {todo: null, targetTodo: null};
 }
 
 function compareStrings(a, b, attr) {
@@ -184,10 +185,10 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
         const todoMove = JSON.parse(connection.request.getBody());
 
         const priority = todoMove.todo.priority;
-        const todo = swapTodos(priority, todoMove.direction ? priority + 1 : priority - 1);
+        const movedTodos = swapTodos(priority, todoMove.direction ? priority + 1 : priority - 1);
 
         connection.mockRespond(new Response(
-          new ResponseOptions({ status: 200, body: { response: todo} })
+          new ResponseOptions({ status: 200, body: { response: movedTodos} })
         ));
       }
 
