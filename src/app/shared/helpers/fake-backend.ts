@@ -78,9 +78,14 @@ const todosCache = {
   ]
 };
 
-function swapTodos(priority, targetPriority) {
+function deepCloneTodos(todos) {
   const tempTodos = [];
-  todosCache.todos.forEach(todo => tempTodos.push(Object.assign({}, todo)));
+  todos.forEach(todo => tempTodos.push(Object.assign({}, todo)));
+  return tempTodos;
+}
+
+function swapTodos(priority, targetPriority) {
+  const tempTodos = deepCloneTodos(todosCache.todos);
   const todo = tempTodos.filter((item) => item.priority === priority)[0];
   const targetTodo = tempTodos.filter((item) => item.priority === targetPriority)[0];
   if (todo && targetTodo) {
@@ -172,7 +177,17 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
         const params = connection.request.url.split('?')[1];
         const id = params.split('=')[1];
 
-        todosCache.todos = todosCache.todos.filter((todo) => todo.id !== id);
+        const deletedTodo = todosCache.todos.filter((todo) => todo.id === id)[0];
+
+        let tempTodos = deepCloneTodos(todosCache.todos);
+        tempTodos = tempTodos.filter((todo) => todo.id !== id);
+
+        // recalculate priorities above
+        tempTodos.forEach((todo) => {
+          todo.priority = todo.priority > deletedTodo.priority ? todo.priority - 1 : todo.priority;
+        });
+
+        todosCache.todos = tempTodos;
 
         connection.mockRespond(new Response(
           new ResponseOptions({ status: 200, body: { response: {result: 'ok', id: id}} })

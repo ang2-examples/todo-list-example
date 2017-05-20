@@ -82,8 +82,18 @@ export function todosReducer(state = initialState, action: Action): TodosState {
 
     case TodosActions.actionTypes.DELETE_TODO_SUCCESS: {
       const deletedId: string = action.payload;
+
+      let tempTodos = deepCloneArray(state.todoList);
+      const deletedTodo = tempTodos.filter((todo) => todo.id === deletedId)[0];
+      tempTodos = tempTodos.filter((todo) => todo.id !== deletedId);
+
+      // recalculate priorities above
+      tempTodos.forEach((todo) => {
+        todo.priority = todo.priority > deletedTodo.priority ? todo.priority - 1 : todo.priority;
+      });
+
       return Object.assign({}, state, {
-        todoList: state.todoList.filter((todo) => todo.id !== deletedId),
+        todoList: tempTodos,
         loading: false
       });
     }
