@@ -170,6 +170,9 @@ function swapTodos(todoList: Todo[], movedTodos: MovedTodos) {
       }
     });
     if (sourceIndex !== -1 && targetIndex !== -1) {
+      todoList[sourceIndex] = movedTodos.todo;
+      todoList[targetIndex] = movedTodos.targetTodo;
+
       const tmp = todoList[sourceIndex];
       todoList[sourceIndex] = todoList[targetIndex];
       todoList[targetIndex] = tmp;
