@@ -31,9 +31,9 @@
         </td>
         <td>{{todo.title}}</td>
         <td class="status">
-          <mdl-select [(ngModel)]="todo.status" (change)="changeStatus($event, todo)">
-            <mdl-option *ngFor="let status of statuses" [value]="status.code">{{status.title}}</mdl-option>
-          </mdl-select>
+          <md-select [(ngModel)]="todo.status" (change)="changeStatus($event, todo)">
+            <md-option *ngFor="let status of statuses" [value]="status.code">{{status.title}}</md-option>
+          </md-select>
         </td>
         <td class="actions priority">
           <md-icon (click)="onMoveDown(todo)">arrow_downward</md-icon>

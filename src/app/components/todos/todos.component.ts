@@ -25,6 +25,13 @@ export class TodosComponent implements OnInit {
     {code: 'done', title: 'Выполнено'}
   ];
 
+  selectedValue: string;
+  foods = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'}
+  ];
+
   constructor(private store: Store<State>, private dialog: MdDialog) { }
 
   ngOnInit() {
@@ -45,8 +52,8 @@ export class TodosComponent implements OnInit {
     this.dialog.open(TodoEditDialogComponent, { data: todo });
   }
 
-  changeStatus(value, todo) {
-    const savedTodo = Object.assign({}, todo, { status: value });
+  changeStatus(event, todo) {
+    const savedTodo = Object.assign({}, todo, { status: event.value });
     this.store.dispatch(new TodosActions.SaveTodoAction(savedTodo));
   }
 

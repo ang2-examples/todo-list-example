@@ -14,7 +14,8 @@ import {
   MdSidenavModule,
   MdIconModule,
   MdProgressBarModule,
-  MdInputModule
+  MdInputModule,
+  MdSelectModule
 } from '@angular/material';
 
 import { StoreModule } from '@ngrx/store';
@@ -69,6 +70,7 @@ import { TodoEditDialogComponent } from './components/todo-edit-dialog/todo-edit
     MdIconModule,
     MdProgressBarModule,
     MdInputModule,
+    MdSelectModule,
 
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
