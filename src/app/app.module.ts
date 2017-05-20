@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MdButtonModule,
@@ -52,6 +53,7 @@ import { TodoEditDialogComponent } from './components/todo-edit-dialog/todo-edit
     ReactiveFormsModule,
     HttpModule,
 
+    FlexLayoutModule,
     BrowserAnimationsModule,
 
     MdButtonModule,
