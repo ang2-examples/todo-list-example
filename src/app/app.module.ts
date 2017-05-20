@@ -5,7 +5,14 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
-import {MaterialModule, MdDialogModule} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {
+  MdButtonModule,
+  MdCheckboxModule,
+  MdDialogModule,
+  MdToolbarModule,
+  MdSidenavModule
+} from '@angular/material';
 
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './store/index.reducer';
@@ -49,7 +56,13 @@ import {MdlPopoverModule} from '@angular2-mdl-ext/popover';
     MdlSelectModule.forRoot(),
     MdlPopoverModule.forRoot(),
 
-    MaterialModule.forRoot(),
+    BrowserAnimationsModule,
+
+    MdButtonModule,
+    MdCheckboxModule,
+    MdDialogModule,
+    MdToolbarModule,
+    MdSidenavModule,
 
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
