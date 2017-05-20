@@ -36,10 +36,6 @@ import {TodosApiService} from './services/todos-api.service';
 import {TodosEffects} from './store/todos/todos.effects';
 
 import { TodosSidenavComponent } from './components/todos-sidenav/todos-sidenav.component';
-
-import {MdlModule} from 'angular2-mdl';
-import {MdlSelectModule} from '@angular2-mdl-ext/select';
-import {MdlPopoverModule} from '@angular2-mdl-ext/popover';
 import { TodoEditDialogComponent } from './components/todo-edit-dialog/todo-edit-dialog.component';
 
 
@@ -55,10 +51,6 @@ import { TodoEditDialogComponent } from './components/todo-edit-dialog/todo-edit
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-
-    MdlModule,
-    MdlSelectModule.forRoot(),
-    MdlPopoverModule.forRoot(),
 
     BrowserAnimationsModule,
 
