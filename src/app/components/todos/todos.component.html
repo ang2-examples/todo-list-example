@@ -5,16 +5,16 @@
     <tr>
       <th></th>
       <th>Имя задания</th>
-      <th class="sortable-column" (click)="onSortStatusChange()">
-        Статус
-        <span *ngIf="sorting.column === 'status'">
+      <th class="priority sortable-column" (click)="onSortPriorityChange()">
+        Приоритет
+        <span *ngIf="sorting.column === 'priority'">
           <md-icon *ngIf="sorting.direction">keyboard_arrow_down</md-icon>
           <md-icon *ngIf="!sorting.direction">keyboard_arrow_up</md-icon>
         </span>
       </th>
-      <th class="priority sortable-column" (click)="onSortPriorityChange()">
-        Приоритет
-        <span *ngIf="sorting.column === 'priority'">
+      <th class="sortable-column" (click)="onSortStatusChange()">
+        Статус
+        <span *ngIf="sorting.column === 'status'">
           <md-icon *ngIf="sorting.direction">keyboard_arrow_down</md-icon>
           <md-icon *ngIf="!sorting.direction">keyboard_arrow_up</md-icon>
         </span>
@@ -30,15 +30,15 @@
           <md-icon (click)="onEditTodo(todo)">edit</md-icon>
         </td>
         <td>{{todo.title}}</td>
-        <td class="status">
-          <md-select [(ngModel)]="todo.status" (change)="changeStatus($event, todo)">
-            <md-option *ngFor="let status of statuses" [value]="status.code">{{status.title}}</md-option>
-          </md-select>
-        </td>
         <td class="actions priority">
           <md-icon (click)="onMoveDown(todo)">arrow_downward</md-icon>
           <md-icon (click)="onMoveUp(todo)">arrow_upward</md-icon>
           <span>{{todo.priority}}</span>
+        </td>
+        <td class="status">
+          <md-select [(ngModel)]="todo.status" (change)="changeStatus($event, todo)">
+            <md-option *ngFor="let status of statuses" [value]="status.code">{{status.title}}</md-option>
+          </md-select>
         </td>
       </tr>
 

@@ -50,6 +50,31 @@ const todosCache = {
       status: 'todo',
       priority: 1,
     },
+
+    {
+      id: guid(),
+      title: 'Помыть машину',
+      status: 'todo',
+      priority: 4,
+    },
+    {
+      id: guid(),
+      title: 'Пробежаться в парке',
+      status: 'done',
+      priority: 5,
+    },
+    {
+      id: guid(),
+      title: 'Почитать книгу',
+      status: 'done',
+      priority: 6,
+    },
+    {
+      id: guid(),
+      title: 'Убраться в квартире',
+      status: 'cancel',
+      priority: 7,
+    },
   ]
 };
 
