@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import 'rxjs/add/operator/first';
 
 @Component({
   selector: 'zkn-root',
@@ -13,6 +14,10 @@ export class AppComponent {
   };
 
   constructor(media: ObservableMedia) {
+    media.asObservable().first().subscribe((change: MediaChange) => {
+      this.sidenavConfig.opened = change.mqAlias !== 'xs';
+    });
+
     media.subscribe((change: MediaChange) => {
       this.sidenavConfig.mode = change.mqAlias === 'xs' ? 'over' : 'side';
     });
