@@ -11,7 +11,9 @@ import {
   MdCheckboxModule,
   MdDialogModule,
   MdToolbarModule,
-  MdSidenavModule
+  MdSidenavModule,
+  MdIconModule,
+  MdProgressBarModule
 } from '@angular/material';
 
 import { StoreModule } from '@ngrx/store';
@@ -63,6 +65,8 @@ import {MdlPopoverModule} from '@angular2-mdl-ext/popover';
     MdDialogModule,
     MdToolbarModule,
     MdSidenavModule,
+    MdIconModule,
+    MdProgressBarModule,
 
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
