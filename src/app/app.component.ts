@@ -15,11 +15,15 @@ export class AppComponent {
 
   constructor(media: ObservableMedia) {
     media.asObservable().first().subscribe((change: MediaChange) => {
-      this.sidenavConfig.opened = change.mqAlias !== 'xs';
+      this.sidenavConfig.opened = !this.isSmallScreen(change);
     });
 
     media.subscribe((change: MediaChange) => {
-      this.sidenavConfig.mode = change.mqAlias === 'xs' ? 'over' : 'side';
+      this.sidenavConfig.mode = this.isSmallScreen(change) ? 'over' : 'side';
     });
+  }
+
+  private isSmallScreen(change: MediaChange) {
+    return ['xs', 'sm'].some((item) => item === change.mqAlias);
   }
 }
