@@ -3,7 +3,6 @@
   <table>
     <thead>
     <tr>
-      <th></th>
       <th>Имя задания</th>
       <th class="priority sortable-column" (click)="onSortPriorityChange()">
         Приоритет
@@ -19,16 +18,13 @@
           <md-icon *ngIf="!sorting.direction">keyboard_arrow_up</md-icon>
         </span>
       </th>
+      <th></th>
     </tr>
     </thead>
 
     <tbody>
 
       <tr *ngFor="let todo of todosList$ | async">
-        <td class="actions">
-          <md-icon (click)="onDeleteTodo(todo)">close</md-icon>
-          <md-icon (click)="onEditTodo(todo)">edit</md-icon>
-        </td>
         <td>{{todo.title}}</td>
         <td class="actions priority">
           <md-icon (click)="onMoveDown(todo)">arrow_downward</md-icon>
@@ -40,11 +36,18 @@
             <md-option *ngFor="let status of statuses" [value]="status.code">{{status.title}}</md-option>
           </md-select>
         </td>
+        <td class="actions">
+          <md-icon (click)="onEditTodo(todo)">edit</md-icon>
+          <md-icon (click)="onDeleteTodo(todo)">close</md-icon>
+        </td>
       </tr>
-
     </tbody>
 
   </table>
+
+  <div *ngIf="(todosList$ | async).length === 0 && !(loading$ | async)">
+    Нет выбранных заданий
+  </div>
 
   <md-progress-bar mode="indeterminate" *ngIf="loading$ | async">
   </md-progress-bar>
